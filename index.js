@@ -5,18 +5,19 @@ const fs = require('fs');
 
 const app = express();
 
-let host = '';
+let path = '';
+const dir = './upload/'
 
 if(!process.env.PORT) {
-  host = 'http://localhost:8000/'
+  path = 'http://localhost:8000/upload/'
 }
 else {
-  host = 'https://upload-file-server.herokuapp.com/upload/'
+  path = 'https://upload-file-server.herokuapp.com/upload/'
 }
 
 app.use(cors());
 
-app.use(express.static('./upload'));
+app.use(express.static(__dirname));
 
 app.use(fileUpload());
 
@@ -27,8 +28,6 @@ app.post('/upload', function (req, res) {
   const sampleFile = req.files.sampleFile;
   const fileName = sampleFile.name;
 
-  const dir = './upload/'
-
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
@@ -37,7 +36,7 @@ app.post('/upload', function (req, res) {
     if (err)
       return res.status(500).send(err);
 
-    res.json({ file: host + fileName });
+    res.json({ file: path + fileName });
   });
 
 });
@@ -54,7 +53,7 @@ app.get('/uploaded', function (req, res) {
     }
 
     files.forEach(file => {
-      uploadedFilePath.push(host + file);
+      uploadedFilePath.push(path + file);
     })
     res.json({ uploaded: uploadedFilePath, dir: __dirname });
   });
