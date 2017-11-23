@@ -32,6 +32,12 @@ app.get('/uploaded', function (req, res) {
   let uploadedFilePath = [];
 
   fs.readdir('./upload', (err, files) => {
+    
+    if(!files) {
+      res.json({ uploaded: [] });
+      return;
+    }
+
     files.forEach(file => {
       uploadedFilePath.push('https://upload-file-server.herokuapp.com/upload/' + file);
     })
