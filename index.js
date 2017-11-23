@@ -53,12 +53,16 @@ app.get('/uploaded', function (req, res) {
     }
 
     files.forEach(file => {
-      uploadedFilePath.push(path + file);
+      uploadedFilePath.push({ url:  path + file, name: file, info: fs.statSync(`${__dirname}/upload/${file}`) });
     })
     res.json({ uploaded: uploadedFilePath });
   });
 
-})
+});
+
+app.delete('/delete/:filename', function (req, res) {
+
+});
 
 app.listen(process.env.PORT || 8000, function () {
   console.log('server start at port 8000!');
