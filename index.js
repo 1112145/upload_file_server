@@ -18,7 +18,13 @@ app.post('/upload', function (req, res) {
   const sampleFile = req.files.sampleFile;
   const fileName = sampleFile.name;
 
-  sampleFile.mv('./upload/' + fileName, function (err) {
+  const dir = './upload'
+
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+
+  sampleFile.mv(dir + fileName, function (err) {
     if (err)
       return res.status(500).send(err);
 
@@ -32,8 +38,8 @@ app.get('/uploaded', function (req, res) {
   let uploadedFilePath = [];
 
   fs.readdir('./upload', (err, files) => {
-    
-    if(!files) {
+
+    if (!files) {
       res.json({ uploaded: [] });
       return;
     }
