@@ -22,7 +22,7 @@ app.post('/upload', function (req, res) {
     if (err)
       return res.status(500).send(err);
 
-    res.json({ file: 'http://localhost:8000/upload/' + fileName });
+    res.json({ file: 'https://upload-file-server.herokuapp.com/upload/' + fileName });
   });
 
 });
@@ -33,7 +33,7 @@ app.get('/uploaded', function (req, res) {
 
   fs.readdir('./upload', (err, files) => {
     files.forEach(file => {
-      uploadedFilePath.push('http://localhost:8000/upload/' + file);
+      uploadedFilePath.push('https://upload-file-server.herokuapp.com/upload/' + file);
     })
     res.json({ uploaded: uploadedFilePath });
   });
