@@ -55,7 +55,7 @@ app.get('/uploaded', function (req, res) {
     files.forEach(file => {
       uploadedFilePath.push(path + file);
     })
-    res.json({ uploaded: uploadedFilePath, dir: __dirname });
+    res.json({ uploaded: uploadedFilePath });
   });
 
 })
